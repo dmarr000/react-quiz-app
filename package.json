@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "quiz-app": "https://github.com/chrisblakely01/quiz-app.git"
+  },
+  "name": "quiz-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/chrisblakely01/quiz-app.git",
+  "author": "Derrick Marr <dmarr000@yahoo.com>",
+  "license": "MIT"
+}
