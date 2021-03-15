@@ -1,7 +1,40 @@
-import React, { useState } from "react";
+import React, { Component, useState } from "react";
+import { QUESTIONS } from './shared/questions';
 
-export default function App() {
-  const questions = [
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+        questions: QUESTIONS,
+    };
+  }
+
+  render() {
+    return (
+      <React.Fragment>
+        <div className=""> Current Score:  </div>
+        < RenderQuiz questions={this.state.questions}/>
+      </React.Fragment>
+    )
+  }
+}
+
+function RenderQuiz({questions}) {
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const handleAnsClick = (isCorrect) => {
+    if (isCorrect) {
+      setScore(score + 1);
+    }
+    const nextQuestion = currentQuestion + 1;
+    if (nextQuestion <questions.length) {
+    setCurrentQuestion(nextQuestion);
+    } else {
+      setShowScore(true);
+    };
+  }
+  const [score, setScore] = useState(0);
+  const [showScore, setShowScore] = useState(false);
+  /*const questions = [
     {
       // id: 0,
       questionText: "What is the capital of France?",
@@ -42,27 +75,27 @@ export default function App() {
         { answerText: "7", isCorrect: true },
       ],
     },
-  ];
+  ]; */
 
   return (
     <div className="app">
       {/* HINT: replace "false" with logic to display the 
       score when the user has answered all the questions */}
-      {false ? (
+      {showScore ? (
         <div className="score-section">
-          You scored 1 out of {questions.length}
+          You scored {score} out of {questions.length}.
         </div>
       ) : (
         <>
           <div className="question-section">
             <div className="question-count">
-              <span>Question 1</span>/{questions.length}
+              <span>Question {currentQuestion + 1}</span>/{questions.length}
             </div>
-            <div className="question-text">{questions[0].questionText}</div>
+            <div className="question-text">{questions[currentQuestion].questionText}</div>
           </div>
           <div className="answer-section">
-            {questions[0].answerOptions.map((answerOption, index) => (
-              <button>{answerOption.answerText}</button>
+            {questions[currentQuestion].answerOptions.map((answerOption, index) => (
+              <button onClick={() => handleAnsClick(answerOption.isCorrect)}>{answerOption.answerText}</button>
             ))}
           </div>
         </>
@@ -70,3 +103,6 @@ export default function App() {
     </div>
   );
 }
+
+
+export default App;
